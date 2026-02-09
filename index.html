@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elite E-Gift Shop - Premium Gifts & Souvenirs</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Custom Styles */
+        * {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Glassmorphism Effect */
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Premium Gradient Backgrounds */
+        .gradient-bg-1 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .gradient-bg-2 {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .gradient-bg-3 {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .gradient-bg-hero {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.95) 0%, rgba(118, 75, 162, 0.95) 100%);
+        }
+
+        /* Scroll Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hover Effects */
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Mobile Menu Animation */
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .mobile-menu.active {
+            max-height: 500px;
+        }
+
+        /* Cart Badge */
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #f5576c;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* Custom Animations */
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Product Card Shine Effect */
+        .product-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .product-card:hover::before {
+            left: 100%;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+
+    <!-- Navigation Bar -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 gradient-bg-1 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-gift text-white text-xl"></i>
+                    </div>
+                    <span class="text-2xl font-bold gradient-text">Elite E-Gift Shop</span>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#home"
+                        class="text-gray-700 hover:text-purple-600 transition duration-300 font-medium">Home</a>
+                    <a href="#about"
+                        class="text-gray-700 hover:text-purple-600 transition duration-300 font-medium">About</a>
+                    <a href="#products"
+                        class="text-gray-700 hover:text-purple-600 transition duration-300 font-medium">Products</a>
+                    <a href="#contact"
+                        class="text-gray-700 hover:text-purple-600 transition duration-300 font-medium">Contact</a>
+                    <div class="relative">
+                        <button class="text-gray-700 hover:text-purple-600 transition duration-300">
+                            <i class="fas fa-shopping-cart text-2xl"></i>
+                            <span class="cart-badge" id="cartCount">0</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden text-gray-700 focus:outline-none" id="mobileMenuBtn">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div class="mobile-menu md:hidden mt-4" id="mobileMenu">
+                <div class="flex flex-col space-y-4 pb-4">
+                    <a href="#home"
+                        class="text-gray-700 hover:text-purple-600 transition duration-300 font-medium">Home</a>
+                    <a href="#about"
+                        class="text-gray-700 hover:text-purple-600 transition duration-300 font-medium">About</a>
+                    <a href="#products"
+                        class="text-gray-700 hover:text-purple-600 transition duration-300 font-medium">Products</a>
+                    <a href="#contact"
+                        class="text-gray-700 hover:text-purple-600 transition duration-300 font-medium">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <!-- Background with gradient overlay -->
+        <div class="absolute inset-0 z-0">
+            <div class="absolute inset-0 gradient-bg-hero"></div>
+            <!-- <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%23ffffff\" fill-opacity=\"0.4\"%3E%3Cpath d=\"M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div> -->
+        </div>
+
+        <!-- Content -->
+        <div class="container mx-auto px-4 z-10 text-center text-white">
+            <div class="fade-in">
+                <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+                    Discover Premium Gifts<br>
+                    <span class="text-yellow-300">That Speak Volumes</span>
+                </h1>
+                <p class="text-xl md:text-2xl mb-8 max-w-2xl mx-auto font-light">
+                    Curated collection of personalized, corporate, and unique gifts for every special moment
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="#products"
+                        class="bg-white text-purple-600 px-8 py-4 rounded-full font-semibold text-lg hover:bg-yellow-300 hover:text-purple-700 transition duration-300 transform hover:scale-105 shadow-xl">
+                        Shop Now <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                    <a href="#about"
+                        class="glass text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white hover:text-purple-600 transition duration-300 transform hover:scale-105">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+
+            <!-- Floating Icons -->
+            <div class="mt-16 flex justify-center space-x-8">
+                <div
+                    class="float-animation w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
+                    <i class="fas fa-gift text-3xl"></i>
+                </div>
+                <div class="float-animation w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center"
+                    style="animation-delay: 0.5s;">
+                    <i class="fas fa-heart text-3xl"></i>
+                </div>
+                <div class="float-animation w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center"
+                    style="animation-delay: 1s;">
+                    <i class="fas fa-star text-3xl"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Down Indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-white animate-bounce">
+            <i class="fas fa-chevron-down text-3xl"></i>
+        </div>
+    </section>
+
+    <!-- Featured Products Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 gradient-text">Featured Collections</h2>
+                <p class="text-gray-600 text-lg">Handpicked selections for your special moments</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div
+                    class="fade-in hover-lift product-card bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-8 text-center shadow-lg">
+                    <div class="w-20 h-20 gradient-bg-1 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-user-edit text-white text-3xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Personalized Gifts</h3>
+                    <p class="text-gray-600 mb-6">Custom-made treasures with names, photos, and heartfelt messages</p>
+                    <a href="#products"
+                        class="gradient-bg-1 text-white px-6 py-3 rounded-full inline-block hover:shadow-xl transition duration-300 transform hover:scale-105">
+                        Explore Now
+                    </a>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="fade-in hover-lift product-card bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-8 text-center shadow-lg"
+                    style="animation-delay: 0.2s;">
+                    <div class="w-20 h-20 gradient-bg-3 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-briefcase text-white text-3xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Corporate Gifts</h3>
+                    <p class="text-gray-600 mb-6">Premium business gifts that leave a lasting impression</p>
+                    <a href="#products"
+                        class="gradient-bg-3 text-white px-6 py-3 rounded-full inline-block hover:shadow-xl transition duration-300 transform hover:scale-105">
+                        Explore Now
+                    </a>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="fade-in hover-lift product-card bg-gradient-to-br from-pink-50 to-red-50 rounded-2xl p-8 text-center shadow-lg"
+                    style="animation-delay: 0.4s;">
+                    <div class="w-20 h-20 gradient-bg-2 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-gem text-white text-3xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Unique Souvenirs</h3>
+                    <p class="text-gray-600 mb-6">Exclusive collectibles and memorable keepsakes</p>
+                    <a href="#products"
+                        class="gradient-bg-2 text-white px-6 py-3 rounded-full inline-block hover:shadow-xl transition duration-300 transform hover:scale-105">
+                        Explore Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Best Sellers Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 gradient-text">Best Sellers</h2>
+                <p class="text-gray-600 text-lg">Our customers' favorite picks</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Product 1 -->
+                <div class="fade-in hover-lift product-card bg-white rounded-2xl overflow-hidden shadow-lg">
+                    <div class="h-64 bg-gradient-to-br from-purple-200 to-pink-200 flex items-center justify-center">
+                        <i class="fas fa-mug-hot text-6xl text-purple-600"></i>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-xl font-bold mb-2">Custom Photo Mug</h4>
+                        <p class="text-gray-600 mb-4 text-sm">Personalized ceramic mug with your favorite photo</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold text-purple-600">$24.99</span>
+                            <button onclick="addToCart()"
+                                class="gradient-bg-1 text-white px-4 py-2 rounded-full hover:shadow-lg transition duration-300 transform hover:scale-105">
+                                <i class="fas fa-cart-plus"></i> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="fade-in hover-lift product-card bg-white rounded-2xl overflow-hidden shadow-lg">
+                    <div class="h-64 bg-gradient-to-br from-blue-200 to-cyan-200 flex items-center justify-center">
+                        <i class="fas fa-pen-fancy text-6xl text-blue-600"></i>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-xl font-bold mb-2">Executive Pen Set</h4>
+                        <p class="text-gray-600 mb-4 text-sm">Premium engraved pen set in luxury box</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold text-blue-600">$89.99</span>
+                            <button onclick="addToCart()"
+                                class="gradient-bg-3 text-white px-4 py-2 rounded-full hover:shadow-lg transition duration-300 transform hover:scale-105">
+                                <i class="fas fa-cart-plus"></i> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="fade-in hover-lift product-card bg-white rounded-2xl overflow-hidden shadow-lg">
+                    <div class="h-64 bg-gradient-to-br from-pink-200 to-red-200 flex items-center justify-center">
+                        <i class="fas fa-heart text-6xl text-pink-600"></i>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-xl font-bold mb-2">Love Frame</h4>
+                        <p class="text-gray-600 mb-4 text-sm">Elegant photo frame with custom message</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold text-pink-600">$34.99</span>
+                            <button onclick="addToCart()"
+                                class="gradient-bg-2 text-white px-4 py-2 rounded-full hover:shadow-lg transition duration-300 transform hover:scale-105">
+                                <i class="fas fa-cart-plus"></i> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="fade-in hover-lift product-card bg-white rounded-2xl overflow-hidden shadow-lg">
+                    <div class="h-64 bg-gradient-to-br from-yellow-200 to-orange-200 flex items-center justify-center">
+                        <i class="fas fa-trophy text-6xl text-yellow-600"></i>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-xl font-bold mb-2">Achievement Trophy</h4>
+                        <p class="text-gray-600 mb-4 text-sm">Custom engraved crystal trophy</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold text-yellow-600">$129.99</span>
+                            <button onclick="addToCart()"
+                                class="bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-4 py-2 rounded-full hover:shadow-lg transition duration-300 transform hover:scale-105">
+                                <i class="fas fa-cart-plus"></i> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Promotional Banner -->
+    <section class="py-20 gradient-bg-1 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml,%3Csvg width=\" 60\"
+            height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\"
+            fill-rule=\"evenodd\"%3E%3Cg fill=\"%23ffffff\" fill-opacity=\"0.4\"%3E%3Cpath d=\"M36
+            34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6
+            4V0H4v4H0v2h4v4h2V6h4V4H6z\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+        <div class="container mx-auto px-4 text-center text-white relative z-10">
+            <div class="fade-in">
+                <div class="inline-block bg-yellow-400 text-purple-900 px-6 py-2 rounded-full font-bold mb-6">
+                    <i class="fas fa-tag mr-2"></i> LIMITED TIME OFFER
+                </div>
+                <h2 class="text-4xl md:text-6xl font-bold mb-6">
+                    Get 25% OFF on Your First Order!
+                </h2>
+                <p class="text-xl md:text-2xl mb-8 max-w-2xl mx-auto">
+                    Use code <span class="bg-white text-purple-600 px-4 py-2 rounded-lg font-bold">FIRST25</span> at
+                    checkout
+                </p>
+                <a href="#products"
+                    class="bg-white text-purple-600 px-8 py-4 rounded-full font-semibold text-lg hover:bg-yellow-300 hover:text-purple-700 transition duration-300 transform hover:scale-105 shadow-xl inline-block">
+                    Shop Now & Save <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 gradient-text">What Our Customers Say</h2>
+                <p class="text-gray-600 text-lg">Real experiences from real people</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="fade-in bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-8 shadow-lg hover-lift">
+                    <div class="flex items-center mb-6">
+                        <div
+                            class="w-16 h-16 gradient-bg-1 rounded-full flex items-center justify-center text-white text-2xl font-bold">
+                            S
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-bold text-lg">Sarah Johnson</h4>
+                            <div class="text-yellow-500">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 italic">"Absolutely love the personalized photo album! The quality is
+                        outstanding and it made the perfect anniversary gift. Will definitely order again!"</p>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="fade-in bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-8 shadow-lg hover-lift">
+                    <div class="flex items-center mb-6">
+                        <div
+                            class="w-16 h-16 gradient-bg-3 rounded-full flex items-center justify-center text-white text-2xl font-bold">
+                            M
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-bold text-lg">Michael Chen</h4>
+                            <div class="text-yellow-500">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 italic">"Ordered corporate gifts for our entire team. The quality exceeded
+                        expectations and delivery was super fast. Highly recommend for business gifting!"</p>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="fade-in bg-gradient-to-br from-pink-50 to-red-50 rounded-2xl p-8 shadow-lg hover-lift">
+                    <div class="flex items-center mb-6">
+                        <div
+                            class="w-16 h-16 gradient-bg-2 rounded-full flex items-center justify-center text-white text-2xl font-bold">
+                            E
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-bold text-lg">Emily Rodriguez</h4>
+                            <div class="text-yellow-500">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 italic">"The custom jewelry box was breathtaking! Beautiful craftsmanship
+                        and attention to detail. Customer service was exceptional too!"</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="about" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 gradient-text">About Elite E-Gift Shop</h2>
+                <p class="text-gray-600 text-lg max-w-3xl mx-auto">
+                    We are passionate about creating memorable gifting experiences through premium, personalized, and
+                    unique products
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16">
+                <div class="fade-in">
+                    <h3 class="text-3xl font-bold mb-6">Our Story</h3>
+                    <p class="text-gray-700 mb-4 leading-relaxed">
+                        Founded with a vision to transform ordinary gifting into extraordinary experiences, Elite E-Gift
+                        Shop has been serving customers worldwide with premium, personalized gifts since our inception.
+                    </p>
+                    <p class="text-gray-700 mb-4 leading-relaxed">
+                        We believe every gift tells a story, and our mission is to help you express your emotions
+                        through carefully curated, high-quality products that speak from the heart.
+                    </p>
+                    <p class="text-gray-700 leading-relaxed">
+                        From corporate gifting solutions to personalized treasures, we combine traditional craftsmanship
+                        with modern design to create gifts that leave lasting impressions.
+                    </p>
+                </div>
+
+                <div class="fade-in">
+                    <div class="bg-gradient-to-br from-purple-100 to-pink-100 rounded-2xl p-8 shadow-xl">
+                        <h3 class="text-3xl font-bold mb-6">Our Mission & Vision</h3>
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div
+                                    class="w-12 h-12 gradient-bg-1 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-bullseye text-white text-xl"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="font-bold text-lg mb-2">Mission</h4>
+                                    <p class="text-gray-700">To provide exceptional quality gifts that create meaningful
+                                        connections and celebrate life's special moments.</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start">
+                                <div
+                                    class="w-12 h-12 gradient-bg-2 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-eye text-white text-xl"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="font-bold text-lg mb-2">Vision</h4>
+                                    <p class="text-gray-700">To become the world's most trusted premium gifting
+                                        destination, known for quality, personalization, and customer satisfaction.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Why Choose Us -->
+            <div class="fade-in">
+                <h3 class="text-3xl font-bold mb-12 text-center">Why Choose Us</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="text-center hover-lift">
+                        <div class="w-20 h-20 gradient-bg-1 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-certificate text-white text-3xl"></i>
+                        </div>
+                        <h4 class="font-bold text-xl mb-3">Premium Quality</h4>
+                        <p class="text-gray-600">Only the finest materials and craftsmanship</p>
+                    </div>
+
+                    <div class="text-center hover-lift">
+                        <div class="w-20 h-20 gradient-bg-3 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-palette text-white text-3xl"></i>
+                        </div>
+                        <h4 class="font-bold text-xl mb-3">Customization</h4>
+                        <p class="text-gray-600">Personalize every detail to perfection</p>
+                    </div>
+
+                    <div class="text-center hover-lift">
+                        <div class="w-20 h-20 gradient-bg-2 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-shipping-fast text-white text-3xl"></i>
+                        </div>
+                        <h4 class="font-bold text-xl mb-3">Fast Delivery</h4>
+                        <p class="text-gray-600">Quick and secure worldwide shipping</p>
+                    </div>
+
+                    <div class="text-center hover-lift">
+                        <div
+                            class="w-20 h-20 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-headset text-white text-3xl"></i>
+                        </div>
+                        <h4 class="font-bold text-xl mb-3">24/7 Support</h4>
+                        <p class="text-gray-600">Always here to help you</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products / Categories Section -->
+    <section id="products" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 gradient-text">Shop by Category</h2>
+                <p class="text-gray-600 text-lg">Explore our premium collections</p>
+            </div>
+
+            <!-- Category Tabs -->
+            <div class="flex flex-wrap justify-center gap-4 mb-12 fade-in">
+                <button onclick="filterProducts('all')"
+                    class="category-btn active px-6 py-3 rounded-full font-semibold transition duration-300 gradient-bg-1 text-white">
+                    All Products
+                </button>
+                <button onclick="filterProducts('personalized')"
+                    class="category-btn px-6 py-3 rounded-full font-semibold transition duration-300 bg-gray-200 text-gray-700 hover:bg-purple-100">
+                    Personalized Gifts
+                </button>
+                <button onclick="filterProducts('corporate')"
+                    class="category-btn px-6 py-3 rounded-full font-semibold transition duration-300 bg-gray-200 text-gray-700 hover:bg-purple-100">
+                    Corporate Gifts
+                </button>
+                <button onclick="filterProducts('souvenirs')"
+                    class="category-btn px-6 py-3 rounded-full font-semibold transition duration-300 bg-gray-200 text-gray-700 hover:bg-purple-100">
+                    Unique Souvenirs
+                </button>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8" id="productsGrid">
+                <!-- Personalized Gifts -->
+                <div
+                    class="product-item personalized fade-in hover-lift product-card bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100">
+                    <div class="h-64 bg-gradient-to-br from-purple-200 to-pink-200 flex items-center justify-center">
+                        <i class="fas fa-book text-7xl text-purple-600"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-xl font-bold">Photo Album</h4>
+                            <span
+                                class="text-xs bg-purple-100 text-purple-600 px-2 py-1 rounded-full">Personalized</span>
+                        </div>
+                        <p class="text-gray-600 mb-4 text-sm">Custom leather-bound photo album with engraved name</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold text-purple-600">$49.99</span>
+                            <button onclick="addToCart()"
+                                class="gradient-bg-1 text-white px-4 py-2 rounded-full hover:shadow-lg transition duration-300 transform hover:scale-105">
+                                <i class="fas fa-cart-plus"></i> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="product-item personalized fade-in hover-lift product-card bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100">
+                    <div class="h-64 bg-gradient-to-br from-pink-200 to-red-200 flex items-center justify-center">
+                        <i class="fas fa-ring text-7xl text-pink-600"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-xl font-bold">Engraved Bracelet</h4>
+                            <span
+                                class="text-xs bg-purple-100 text-purple-600 px-2 py-1 rounded-full">Personalized</span>
+                        </div>
+                        <p class="text-gray-600 mb-4 text-sm">Sterling silver bracelet with custom message</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold text-pink-600">$79.99</span>
+                            <button onclick="addToCart()"
+                                class="gradient-bg-2 text-white px-4 py-2 rounded-full hover:shadow-lg transition duration-300 transform hover:scale-105">
+                                <i class="fas fa-cart-plus"></i> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="product-item personalized fade-in hover-lift product-card bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100">
+                    <div class="h-64 bg-gradient-to-br from-blue-200 to-purple-200 flex items-center justify-center">
+                        <i class="fas fa-tshirt text-7xl text-blue-600"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-xl font-bold">Custom T-Shirt</h4>
+                            <span
+                                class="text-xs bg-purple-100 text-purple-600 px-2 py-1 rounded-full">Personalized</span>
+                        </div>
+                        <p class="text-gray-600 mb-4 text-sm">Premium cotton tee with your design or text</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold text-blue-600">$29.99</span>
+                            <button onclick="addToCart()"
+                                class="gradient-bg-3 text-white px-4 py-2 rounded-full hover:shadow-lg transition duration-300 transform hover:scale-105">
+                                <i class="fas fa-cart-plus"></i> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="product-item personalized fade-in hover-lift product-card bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100">
+                    <div class="h-64 bg-gradient-to-br from-yellow-200 to-orange-200 flex items-center justify-center">
+                        <i class="fas fa-puzzle-piece text-7xl text-yellow-600"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-xl font-bold">Photo Puzzle</h4>
+                            <span
+                                class="text-xs bg-purple-100 text-purple-600 px-2 py-1 rounded-full">Personalized</span>
+                        </div>
+                        <p class="text-gray-600 mb-4 text-sm">1000-piece puzzle with your favorite photo</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold text-yellow-600">$39.99</span>
+                            <button onclick="addToCart()"
+                                class="bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-4 py-2 rounded-full hover:shadow-lg transition duration-300 transform hover:scale-105">
+                                <i class="fas fa-cart-plus"></i> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Corporate Gifts -->
+                <div
+                    class="product-item corporate fade-in hover-lift product-card bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100">
+                    <div class="h-64 bg-gradient-to-br from-blue-200 to-cyan-200 flex items-center justify-center">
+                        <i class="fas fa-award text-7xl text-blue-600"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-xl font-bold">Crystal Award</h4>
+                            <span class="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded-full">Corporate</span>
+                        </div>
+                        <p class="text-gray-600 mb-4 text-sm">Premium crystal trophy with custom engraving</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold text-blue-600">$159.99</span>
+                            <button onclick="addToCart()"
+                                class="gradient-bg-3 text-white px-4 py-2 rounded-full hover:shadow-lg transition duration-300 transform hover:scale-105">
+                                <i class="fas fa-cart-plus"></i> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="product-item corporate fade-in hover-lift product-card bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100">
+                    <div class="h-64 bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center">
+                        <i class="fas fa-briefcase text-7xl text-gray-700"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-xl font-bold">Leather Portfolio</h4>
+                            <span class="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded-full">Corporate</span>
+                        </div>
+                        <p class="text-gray-600 mb-4 text-sm">Executive leather portfolio with personalization</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold text-gray-700">$119.99</span>
+                            <button onclick="addToCart()"
+                                class="bg-gradient-to-r from-gray-600 to-gray-700 text-white px-4 py-2 rounded-full hover:shadow-lg transition duration-300 transform hover:scale-105">
+                                <i class="fas fa-cart-plus"></i> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="product-item corporate fade-in hover-lift product-card bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100">
+                    <div class="h-64 bg-gradient-to-br from-indigo-200 to-purple-200 flex items-center justify-center">
+                        <i class="fas fa-gift text-7xl text-indigo-600"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-xl font-bold">Gift Hamper</h4>
+                            <span class="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded-full">Corporate</span>
+                        </div>
+                        <p class="text-gray-600 mb-4 text-sm">Luxury gift basket with premium goodies</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold text-indigo-600">$199.99</span>
+                            <button onclick="addToCart()"
+                                class="bg-gradient-to-r from-indigo-500 to-purple-500 text-white px-4 py-2 rounded-full hover:shadow-lg transition duration-300 transform hover:scale-105">
+                                <i class="fas fa-cart-plus"></i> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="product-item corporate fade-in hover-lift product-card bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100">
+                    <div class="h-64 bg-gradient-to-br from-green-200 to-teal-200 flex items-center justify-center">
+                        <i class="fas fa-clock text-7xl text-green-600"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-xl font-bold">Desk Clock</h4>
+                            <span class="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded-full">Corporate</span>
+                        </div>
+                        <p class="text-gray-600 mb-4 text-sm">Elegant wooden desk clock with plaque</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold text-green-600">$69.99</span>
+                            <button onclick="addToCart()"
+                                class="bg-gradient-to-r from-green-500 to-teal-500 text-white px-4 py-2 rounded-full hover:shadow-lg transition duration-300 transform hover:scale-105">
+                                <i class="fas fa-cart-plus"></i> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Unique Souvenirs -->
+                <div
+                    class="product-item souvenirs fade-in hover-lift product-card bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100">
+                    <div class="h-64 bg-gradient-to-br from-red-200 to-pink-200 flex items-center justify-center">
+                        <i class="fas fa-home text-7xl text-red-600"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-xl font-bold">Mini Monument</h4>
+                            <span class="text-xs bg-pink-100 text-pink-600 px-2 py-1 rounded-full">Souvenir</span>
+                        </div>
+                        <p class="text-gray-600 mb-4 text-sm">Handcrafted miniature landmark replica</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold text-red-600">$44.99</span>
+                            <button onclick="addToCart()"
+                                class="bg-gradient-to-r from-red-500 to-pink-500 text-white px-4 py-2 rounded-full hover:shadow-lg transition duration-300 transform hover:scale-105">
+                                <i class="fas fa-cart-plus"></i> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="product-item souvenirs fade-in hover-lift product-card bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100">
+                    <div class="h-64 bg-gradient-to-br from-purple-200 to-indigo-200 flex items-center justify-center">
+                        <i class="fas fa-mask text-7xl text-purple-600"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-xl font-bold">Cultural Mask</h4>
+                            <span class="text-xs bg-pink-100 text-pink-600 px-2 py-1 rounded-full">Souvenir</span>
+                        </div>
+                        <p class="text-gray-600 mb-4 text-sm">Authentic handcrafted decorative mask</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold text-purple-600">$54.99</span>
+                            <button onclick="addToCart()"
+                                class="gradient-bg-1 text-white px-4 py-2 rounded-full hover:shadow-lg transition duration-300 transform hover:scale-105">
+                                <i class="fas fa-cart-plus"></i> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="product-item souvenirs fade-in hover-lift product-card bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100">
+                    <div class="h-64 bg-gradient-to-br from-orange-200 to-yellow-200 flex items-center justify-center">
+                        <i class="fas fa-map-marked-alt text-7xl text-orange-600"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-xl font-bold">Travel Map</h4>
+                            <span class="text-xs bg-pink-100 text-pink-600 px-2 py-1 rounded-full">Souvenir</span>
+                        </div>
+                        <p class="text-gray-600 mb-4 text-sm">Vintage-style world map poster</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold text-orange-600">$34.99</span>
+                            <button onclick="addToCart()"
+                                class="bg-gradient-to-r from-orange-500 to-yellow-500 text-white px-4 py-2 rounded-full hover:shadow-lg transition duration-300 transform hover:scale-105">
+                                <i class="fas fa-cart-plus"></i> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="product-item souvenirs fade-in hover-lift product-card bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100">
+                    <div class="h-64 bg-gradient-to-br from-teal-200 to-cyan-200 flex items-center justify-center">
+                        <i class="fas fa-globe text-7xl text-teal-600"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-xl font-bold">Globe Decor</h4>
+                            <span class="text-xs bg-pink-100 text-pink-600 px-2 py-1 rounded-full">Souvenir</span>
+                        </div>
+                        <p class="text-gray-600 mb-4 text-sm">Antique-finish rotating globe on stand</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold text-teal-600">$89.99</span>
+                            <button onclick="addToCart()"
+                                class="bg-gradient-to-r from-teal-500 to-cyan-500 text-white px-4 py-2 rounded-full hover:shadow-lg transition duration-300 transform hover:scale-105">
+                                <i class="fas fa-cart-plus"></i> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="py-20 gradient-bg-3">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center text-white fade-in">
+                <i class="fas fa-envelope-open-text text-6xl mb-6"></i>
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">Stay Updated</h2>
+                <p class="text-xl mb-8">Subscribe to our newsletter for exclusive offers, new arrivals, and gifting
+                    inspiration</p>
+                <form class="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto">
+                    <input type="email" placeholder="Enter your email address"
+                        class="flex-1 px-6 py-4 rounded-full text-gray-800 focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50">
+                    <button type="submit"
+                        class="bg-white text-blue-500 px-8 py-4 rounded-full font-semibold hover:bg-yellow-300 hover:text-blue-700 transition duration-300 transform hover:scale-105 shadow-xl">
+                        Subscribe <i class="fas fa-paper-plane ml-2"></i>
+                    </button>
+                </form>
+                <p class="text-sm mt-4 opacity-90">We respect your privacy. Unsubscribe anytime.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Us Section -->
+    <section id="contact" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 gradient-text">Get in Touch</h2>
+                <p class="text-gray-600 text-lg">We'd love to hear from you. Send us a message!</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Contact Form -->
+                <div class="fade-in">
+                    <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-8 shadow-xl">
+                        <h3 class="text-2xl font-bold mb-6">Send us a Message</h3>
+                        <form class="space-y-6">
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">Full Name *</label>
+                                <input type="text" required
+                                    class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                    placeholder="John Doe">
+                            </div>
+
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">Email Address *</label>
+                                <input type="email" required
+                                    class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                    placeholder="john@example.com">
+                            </div>
+
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">Phone Number</label>
+                                <input type="tel"
+                                    class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                    placeholder="+1 (555) 000-0000">
+                            </div>
+
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">Product Type</label>
+                                <select
+                                    class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                                    <option>Select a category</option>
+                                    <option>Personalized Gifts</option>
+                                    <option>Corporate Gifts</option>
+                                    <option>Unique Souvenirs</option>
+                                    <option>Custom Order</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">Message *</label>
+                                <textarea required rows="5"
+                                    class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                    placeholder="Tell us about your requirements..."></textarea>
+                            </div>
+
+                            <button type="submit"
+                                class="w-full gradient-bg-1 text-white px-8 py-4 rounded-full font-semibold text-lg hover:shadow-xl transition duration-300 transform hover:scale-105">
+                                Send Message <i class="fas fa-paper-plane ml-2"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Contact Information -->
+                <div class="fade-in space-y-8">
+                    <!-- Contact Details -->
+                    <div class="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-8 shadow-xl">
+                        <h3 class="text-2xl font-bold mb-6">Contact Information</h3>
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div
+                                    class="w-12 h-12 gradient-bg-3 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-map-marker-alt text-white text-xl"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="font-bold text-lg mb-1">Address</h4>
+                                    <p class="text-gray-600">123 Gift Street, Premium Plaza<br>New York, NY 10001, USA
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start">
+                                <div
+                                    class="w-12 h-12 gradient-bg-1 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-phone text-white text-xl"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="font-bold text-lg mb-1">Phone</h4>
+                                    <p class="text-gray-600">+1 (555) 123-4567<br>+1 (555) 987-6543</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start">
+                                <div
+                                    class="w-12 h-12 gradient-bg-2 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-envelope text-white text-xl"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="font-bold text-lg mb-1">Email</h4>
+                                    <p class="text-gray-600">info@eliteegiftshop.com<br>support@eliteegiftshop.com</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start">
+                                <div
+                                    class="w-12 h-12 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-clock text-white text-xl"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="font-bold text-lg mb-1">Business Hours</h4>
+                                    <p class="text-gray-600">Monday - Friday: 9:00 AM - 6:00 PM<br>Saturday: 10:00 AM -
+                                        4:00 PM<br>Sunday: Closed</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Google Maps Placeholder -->
+                    <div
+                        class="bg-gray-200 rounded-2xl overflow-hidden shadow-xl h-64 flex items-center justify-center">
+                        <div class="text-center">
+                            <i class="fas fa-map-marked-alt text-6xl text-gray-400 mb-4"></i>
+                            <p class="text-gray-600 font-semibold">Google Maps Integration</p>
+                            <p class="text-gray-500 text-sm">Location Preview</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-16">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                <!-- Company Info -->
+                <div>
+                    <div class="flex items-center space-x-2 mb-6">
+                        <div class="w-10 h-10 gradient-bg-1 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-gift text-white text-xl"></i>
+                        </div>
+                        <span class="text-2xl font-bold">Elite E-Gift Shop</span>
+                    </div>
+                    <p class="text-gray-400 mb-6">Creating memorable gifting experiences through premium, personalized,
+                        and unique products since 2020.</p>
+                    <div class="flex space-x-4">
+                        <a href="#"
+                            class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-purple-600 transition duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#"
+                            class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-purple-600 transition duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#"
+                            class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-purple-600 transition duration-300">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#"
+                            class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-purple-600 transition duration-300">
+                            <i class="fab fa-pinterest"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-xl font-bold mb-6">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#home" class="text-gray-400 hover:text-white transition duration-300">Home</a></li>
+                        <li><a href="#about" class="text-gray-400 hover:text-white transition duration-300">About Us</a>
+                        </li>
+                        <li><a href="#products"
+                                class="text-gray-400 hover:text-white transition duration-300">Products</a></li>
+                        <li><a href="#contact"
+                                class="text-gray-400 hover:text-white transition duration-300">Contact</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">FAQs</a></li>
+                    </ul>
+                </div>
+
+                <!-- Categories -->
+                <div>
+                    <h4 class="text-xl font-bold mb-6">Categories</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Personalized
+                                Gifts</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Corporate
+                                Gifts</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Unique
+                                Souvenirs</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Custom Orders</a>
+                        </li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Gift Hampers</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Customer Service -->
+                <div>
+                    <h4 class="text-xl font-bold mb-6">Customer Service</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Shipping
+                                Information</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Return Policy</a>
+                        </li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Terms &
+                                Conditions</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Privacy
+                                Policy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Track Order</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom Bar -->
+            <div class="border-t border-gray-800 pt-8 text-center">
+                <p class="text-gray-400">
+                    &copy; 2026 Elite E-Gift Shop. All rights reserved. | Crafted with <i
+                        class="fas fa-heart text-red-500"></i> for your special moments
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+            });
+        });
+
+        // Scroll Animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Cart Counter
+        let cartCount = 0;
+        const cartCountElement = document.getElementById('cartCount');
+
+        function addToCart() {
+            cartCount++;
+            cartCountElement.textContent = cartCount;
+
+            // Add animation
+            cartCountElement.style.transform = 'scale(1.3)';
+            setTimeout(() => {
+                cartCountElement.style.transform = 'scale(1)';
+            }, 200);
+
+            // Show notification
+            showNotification('Item added to cart!');
+        }
+
+        // Notification function
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-24 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-xl z-50 transform transition-all duration-300';
+            notification.innerHTML = `<i class="fas fa-check-circle mr-2"></i>${message}`;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateY(-20px)';
+                setTimeout(() => notification.remove(), 300);
+            }, 2000);
+        }
+
+        // Product Filter
+        function filterProducts(category) {
+            const products = document.querySelectorAll('.product-item');
+            const buttons = document.querySelectorAll('.category-btn');
+
+            // Update button styles
+            buttons.forEach(btn => {
+                btn.classList.remove('gradient-bg-1', 'text-white');
+                btn.classList.add('bg-gray-200', 'text-gray-700');
+            });
+
+            event.target.classList.remove('bg-gray-200', 'text-gray-700');
+            event.target.classList.add('gradient-bg-1', 'text-white');
+
+            // Filter products
+            products.forEach(product => {
+                if (category === 'all') {
+                    product.style.display = 'block';
+                } else {
+                    if (product.classList.contains(category)) {
+                        product.style.display = 'block';
+                    } else {
+                        product.style.display = 'none';
+                    }
+                }
+            });
+        }
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Sticky Navigation
+        let lastScroll = 0;
+        const nav = document.querySelector('nav');
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+
+            if (currentScroll > 100) {
+                nav.classList.add('shadow-2xl');
+            } else {
+                nav.classList.remove('shadow-2xl');
+            }
+
+            lastScroll = currentScroll;
+        });
+    </script>
+
+</body>
+
+</html>
